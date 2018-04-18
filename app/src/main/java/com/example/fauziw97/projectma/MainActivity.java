@@ -23,8 +23,7 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView.Adapter mAdapter;
     private List<CrimeModel> mCrimeModels = new ArrayList<>();
 
-    @BindView(R.id.recyclerView)
-    RecyclerView mRecyclerView;
+   RecyclerView mRecyclerView;
     @BindView(R.id.addCrime)
     FloatingActionButton fab;
 
@@ -34,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-
+        mRecyclerView = findViewById(R.id.recyclerView);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         mRecyclerView.setHasFixedSize(true);
 
@@ -43,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    CrimeModel crimeModel = new CrimeModel(snapshot.child("title").toString(), snapshot.child("desc").toString(),snapshot.child("img").toString());
+                    CrimeModel crimeModel = new CrimeModel(snapshot.child("title").getValue(String.class), snapshot.child("desc").getValue(String.class),snapshot.child("img").getValue(String.class));
                     mCrimeModels.add(crimeModel);
                     mAdapter = new CrimeAdapter(getApplicationContext(), mCrimeModels);
                     mRecyclerView.setAdapter(mAdapter);

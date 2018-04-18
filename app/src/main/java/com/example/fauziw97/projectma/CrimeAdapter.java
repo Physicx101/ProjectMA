@@ -12,7 +12,6 @@ import com.bumptech.glide.Glide;
 
 import java.util.List;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -32,20 +31,20 @@ public class CrimeAdapter extends RecyclerView.Adapter<CrimeAdapter.ViewHolder> 
     @Override
     public CrimeAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_crime, parent, false);
-        ButterKnife.bind(this,view);
+        ButterKnife.bind(this, view);
 
         return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(CrimeAdapter.ViewHolder holder, int position) {
-      // holder.root.setTag(mCrimeModels.get(position));
-       mCrimeModel = mCrimeModels.get(position);
-       holder.crimeTitle.setText(mCrimeModel.getTitle());
-       holder.crimeDesc.setText(mCrimeModel.getDesc());
+    public void onBindViewHolder(final CrimeAdapter.ViewHolder holder, int position) {
+        holder.root.setTag(mCrimeModels.get(position));
+        mCrimeModel = mCrimeModels.get(position);
         Glide.with(mContext)
                 .load(mCrimeModel.getImage())
                 .into(holder.crimeImage);
+        holder.crimeTitle.setText(mCrimeModel.getTitle());
+        holder.crimeDesc.setText(mCrimeModel.getDesc());
     }
 
     @Override
@@ -54,17 +53,21 @@ public class CrimeAdapter extends RecyclerView.Adapter<CrimeAdapter.ViewHolder> 
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.crimeImage)
+        //@BindView(R.id.crimeImage)
         ImageView crimeImage;
-        @BindView(R.id.crimeTitle)
+        //@BindView(R.id.crimeTitle)
         TextView crimeTitle;
-        @BindView(R.id.crimeDesc)
+        //@BindView(R.id.crimeDesc)
         TextView crimeDesc;
         View root;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            ButterKnife.bind(this,itemView);
+            ButterKnife.bind(this, itemView);
+            crimeImage = itemView.findViewById(R.id.crimeImage);
+            crimeTitle = itemView.findViewById(R.id.crimeTitle);
+            crimeDesc = itemView.findViewById(R.id.crimeDesc);
+            root = itemView;
         }
     }
 }
